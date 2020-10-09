@@ -17,3 +17,24 @@
                     length=10,
                     labelsize= 10
                     )
+
+
+                    ##################################################################
+self.series_map = {
+            self.feature.name:self.originals,
+            'scaled':self.scaled,
+            'delta':self.deltas,
+            'rolling':self.rolling
+        }    
+
+        ##########################
+         self.features[self.feature.name] = self.feature
+        for col in self.feature.series_frame.columns:
+            self.feat_type = col.split('_')[0]
+            self.ingest_frame = self.series_map[self.feat_type]
+            self.ingest_frame = pd.merge_asof(
+                self.series_map[self.feat_type],
+                self.feature.series_frame[col],
+                right_index=True,
+                left_index=True
+                )

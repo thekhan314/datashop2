@@ -12,13 +12,15 @@ class Dataset():
         self.categoricals= []
         self.numericals = []
         self.strings = []  
-        self.default = []          
+        self.default = []  
+        self.timeseries = []       
 
         self.feature_types  = {
             'string':self.strings,
             'numeric':self.numericals,
             'categorical':self.categoricals,
-            'default': self.default
+            'default': self.default,
+            'date':self.timeseries
         }
 
         for col in self.dataframe.columns:
@@ -27,6 +29,8 @@ class Dataset():
             self.feature_types[self.feat.feature_type].append(col)
         
         self.report()
+    def __getitem__(self,sliced):
+        return self.features[sliced]
 
     def report(self,n_highest_counts = 10):
         self.df_report = report(self.dataframe,n_highest_counts = 10)
